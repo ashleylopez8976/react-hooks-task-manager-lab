@@ -1,135 +1,118 @@
-# Lab: Task Manager
+# Task Manager
 
-## Overview
-In this lab, we’ll build a Task Manager application that allows users to add, complete, and search tasks. Utilizing the hooks of `useRef` to persist values without re-rendering, `useId` to generate unique IDs for accessibility and controlled components, and `useContext` for global state management.
+A React application that lets users add tasks, mark them as completed, and search their task list. Task data is saved through a local backend in `db.json`.
 
-## Task 1: Define the Problem
-The frontend is set up, but the application lacks interactivity and state management.
+## Features
 
-As a user, I should be able to:
-- Add a new task using a form (`useId`)
-- Mark tasks as completed (`useContext`)
-- Search tasks dynamically (`useRef`)
+- Load saved tasks from the backend.
+- Add tasks using a form.
+- Prevent empty or whitespace-only tasks.
+- Mark tasks as complete or undo completion.
+- Display completed tasks with a line through the title.
+- Search tasks as you type, regardless of capitalization.
+- Preserve added tasks and completion changes after refreshing.
 
-## Task 2: Determine the Design
-Determine state and props needed for each component:
-- Global states (`useContext`)
-- Persistent Values (`useRef`)
-- Unique IDs (`useId`)
+## Technologies
 
-## Task 3: Develop the Code
-### Implement Global State with `useContext`
-- Create `TaskProvider` as global state within `TaskContext.jsx`
-- Replace tasks state in app with context
+- React
+- JavaScript and JSX
+- Vite
+- Context API
+- Fetch API
+- Vitest and React Testing Library
 
-### Mark Task
-- Implement `toggleComplete` function within `TaskContext.jsx`
-- Call `toggleComplete` upon clicking task button
+## React Hooks Used
 
-### Submit Tasks
-- Apply `useId` on form input
-- Implement `addTask` function within `TaskContext.jsx`
-- Call `addTask` within submit
+- `useContext`: Access shared tasks and task functions.
+- `useState`: Manage tasks, form input, and search text.
+- `useEffect`: Load tasks when the provider mounts.
+- `useRef`: Reference the search input and read its current value.
+- `useId`: Generate a unique ID linking the task input to its label.
 
-### Implement Search Functionality
-- Implement `useRef` on search input
-- Implement filter on task context
+The backend assigns task IDs. `useId` provides the form's accessibility ID.
 
-## Task 4: Test and Refine
-Debug and test during development using the provided test suite and React DevTools in Chrome.
+## Setup and Installation
 
-## Task 5: Document and Maintain
-- Commit as you go, writing meaningful commit messages
-- Push commit history to GitHub periodically and when lab is complete
+Clone your fork and open the project folder:
 
-## Tools and Resources
-- GitHub Repo: 
-- `useRef`: [React useRef](https://react.dev/reference/react/useRef)
-- `useContext`: [React useContext](https://react.dev/reference/react/useContext)
-- `useId`: [React useId](https://react.dev/reference/react/useId)
+```bash
+git clone git@github.com:ashleylopez8976/react-hooks-task-manager-lab.git
+cd react-hooks-task-manager-lab
+npm install
+```
 
-## Instructions
-### Set Up
-Before we begin coding, let's complete the initial setup for this lesson:
+Start the frontend:
 
-#### Fork and Clone
-- Go to the provided GitHub repository link.
-- Fork the repository to your GitHub account.
-- Clone the forked repository to your local machine.
-
-#### Open and Run File
-- Open the project in VSCode.
-- Run `npm install` to install all necessary dependencies.
-
-## Instructions
-### Task 1: Define the Problem
-The frontend is set up, but the application lacks interactivity and state management.
-
-As a user, I should be able to:
-- Add a new task using a form (`useId`)
-- Mark tasks as completed (`useContext`)
-- Search tasks dynamically (`useRef`)
-
-### Task 2: Determine the Design
-Determine state and props needed for each component.
-
-### Task 3: Develop, Test, and Refine the Code
-#### Open React application in browser
-```sh
+```bash
 npm run dev
 ```
 
-#### Run the included backend
-```sh
+In a separate terminal, start the backend:
+
+```bash
 npm run server
 ```
 
-#### Run test suite
-```sh
+Keep both terminals running. Open the local URL provided by Vite.
+
+The application accesses tasks at:
+
+```text
+http://localhost:6001/tasks
+```
+
+## Usage
+
+1. Enter a task in the New Task field and click Add Task.
+2. Click Complete to mark a task as finished.
+3. Click Undo to mark it as incomplete.
+4. Type in the search field to filter tasks.
+5. Clear the search field to display all tasks.
+
+## Testing
+
+Run the tests in watch mode:
+
+```bash
 npm run test
 ```
 
-### Create feature branch
-#### Implement Global State with `useContext`
-- Create `TaskProvider` as global state within `TaskContext.jsx`
-- Replace tasks state in app with context
-- Update `App` within `main.jsx` to be wrapped in `TaskProvider`
+Run the full test suite once:
 
-#### Mark Task
-- Implement `toggleComplete` function within `TaskContext.jsx`
-- Ensure `toggleComplete` function edits both the `db.json` and page
-- Call `toggleComplete` upon clicking task button
+```bash
+npm run test -- --run
+```
 
-#### Submit Tasks
-- Apply `useId` on form input
-- Implement `addTask` function within `TaskContext.jsx`
-- Call `addTask` within submit
+The tests check loading, adding, searching, and completing tasks.
 
-#### Implement Search Functionality
-- Implement `useRef` on search input
-- Implement filter task context on `TaskList`
+All 8 tests passed across 2 test files. Both files run the same four test cases.
 
-### Push feature branch and open a PR on GitHub
-- Merge to main
+Browser checks also confirmed that tasks and completion changes persist after refreshing.
 
-## Task 4: Document and Maintain
-### Best Practice documentation steps:
-- Add comments to code to explain purpose and logic
-- Clarify intent/functionality of code to other developers
-- Add screenshot of completed work included in Markdown in `README.md`
-- Update `README.md` text to reflect the functionality of the application following [Make a README](https://makeareadme.com)
-- Delete any stale branches on GitHub
-- Remove unnecessary/commented-out code
-- If needed, update `.gitignore` to remove sensitive data
+## Screenshot
 
-## Submission
-Once all tests are passing and working code is pushed to the GitHub main branch, submit your GitHub repo through Canvas using CodeGrade.
+![Task Manager showing active and completed tasks](screenshots/task-manager.png)
 
-## Grading Criteria
-The application passes all test suites.
+## Project Structure
 
-Ensure the application:
-- Loads tasks with context.
-- Submits new task with `useId`
-- Marks tasks as complete.
-- Filters tasks shown on the page by a search input.
+```text
+src/
+├── __tests__/
+│   ├── test_suites/
+│   │   └── Hooks.test.jsx
+│   ├── App.test.jsx
+│   └── setup.jsx
+├── components/
+│   ├── App.jsx
+│   ├── SearchBar.jsx
+│   ├── TaskForm.jsx
+│   └── TaskList.jsx
+├── context/
+│   └── TaskContext.jsx
+├── index.css
+└── main.jsx
+```
+
+## Author
+
+Ashley Lopez
